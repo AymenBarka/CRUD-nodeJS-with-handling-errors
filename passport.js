@@ -21,4 +21,3 @@ passport.use(new BearerStrategy(
     
   }
 ));
-module.exports = router;

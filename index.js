@@ -15,12 +15,6 @@ const secureRoutes=require('./routes/api/secure-routes');
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-
-//set up express app
-
-var app=express();
-
 //initialize routes
 app.use('/api',require('./routes/api/TodosApi'));
 app.use('/users',userapi);
@@ -28,7 +22,7 @@ app.use('/AffectTodoToUser',AffectTodoToUser);
 app.use('/DeleteTodoFromUser',DeleteTodoFromUser);
 app.use('/mail',mail);
 app.use('/img',img);
-app.use('/users', passport.authenticate('bearer', { session : false }), secureRoutes );
+//app.use('/users', passport.authenticate('bearer', { session : false }), secureRoutes );
 
 //error handling middleware
 app.use(function(err,req,res,next){

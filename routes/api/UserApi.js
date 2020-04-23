@@ -13,7 +13,7 @@ router.post('/login', function (req, res) {
     console.log(req.body)
     User.findOne({ email: req.body.email }, (err, userFound) => {
       if (err) res.send(err);
-      console.log(userFound)
+      console.log(req.body.email)
       var token = jwt.sign({ data: userFound }, 'secret', { expiresIn: '1h' });
       res.send({ access_token: token });
     })
@@ -36,17 +36,11 @@ router.get('/getuser/:id', function(req,res,next){
 // Create
 // ======
 //add user to the db
-router.post('/addUser',passport.authenticate('bearer',{session:false}), async(req,res)=>{
-    const newEntry = new User(req.body);
-    await newEntry.save((err, result) => {
-      if (err) {
-        console.log(err);
-        res.sendStatus(500);
-      } else {
-        res.send(result);
-      }
+router.post('/addUser', function(req,res,next){
+    User.create(req.body).then(function(user){
+        res.send(user);
+    }).catch(next);
     });
-  });
 //update user in the db 
  router.put('/updateUser/:id', function(req,res,next){
      User.findByIdAndUpdate({_id:req.params.id},req.body).then(function(){
