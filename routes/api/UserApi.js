@@ -20,15 +20,17 @@ router.post('/login', function (req, res) {
   });
  
 //get a list of users from db
-router.get('/getUsers', function(req,res,next){
-    User.find({}).then(function(user){
-        res.send(user);
+router.get('/getUsers', passport.authenticate('bearer', { session: false }), function(req,res,next){
+    User.find({},(err,resultat)=>{
+       if(err) res.send(err);
+        res.send(resultat);
     });
 });
 //get user from db
-router.get('/getuser/:id', function(req,res,next){
-    User.findById({_id:req.params.id}).then(function(user){
-        res.send(user);
+router.get('/getuser/:id', passport.authenticate('bearer', { session: false }), function(req,res,next){
+    User.findById(req.params.id,(err,resultat)=>{
+        if(err)res.send(err);
+        res.send(resultat);
     });
     });
 
@@ -42,19 +44,18 @@ router.post('/addUser', function(req,res,next){
     }).catch(next);
     });
 //update user in the db 
- router.put('/updateUser/:id', function(req,res,next){
-     User.findByIdAndUpdate({_id:req.params.id},req.body).then(function(){
-         User.findOne({_id:req.params.id}).then(function(user){
-            res.send(user);
-
-         });
+ router.put('/updateUser/:id', passport.authenticate('bearer', { session: false }), function(req,res,next){
+     User.findByIdAndUpdate(req.params.id,req.body,(err,resultat)=>{
+         if(err)res.send(err);
+            res.send(resultat);  
      });
     });
 
     //delete user from db
-router.delete('/deleteUser/:id', function(req,res,next){
-    User.findByIdAndRemove({_id:req.params.id}).then(function(user){
-       res.send(user) 
+router.delete('/deleteUser/:id', passport.authenticate('bearer', { session: false }), function(req,res,next){
+    User.findByIdAndRemove(req.params.id,(err,resultat)=>{
+        if(err)res.send(err);
+       res.send(resultat) ;
     });
     });
     module.exports=router;
