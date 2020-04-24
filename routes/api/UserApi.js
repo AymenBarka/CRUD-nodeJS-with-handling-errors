@@ -21,7 +21,7 @@ router.post('/login', function (req, res) {
   });
  
 //get a list of users from db
-router.get('/getUsers', passport.authenticate('bearer', { session: false }), function(req,res,next){
+router.get('/getUsers', passport.authenticate('bearer', { session: false }),(req,res,next)=>{
     User.find({},(err,resultat)=>{
        if(err){ res.send(err);
        }else{res.send(resultat);

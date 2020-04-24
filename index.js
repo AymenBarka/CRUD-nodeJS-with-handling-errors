@@ -6,13 +6,16 @@ var AffectTodoToUser=require('./routes/api/AffectTodoToUser');
 var DeleteTodoFromUser=require('./routes/api/DeleteTodoFromUser');
 var mail=require('./routes/api/Mail');
 var img = require('./routes/api/imgUploads');
-var passport=require('passport');
 require('./passport');
-
+var cron = require('node-cron');
+ 
+cron.schedule('*/2 * * * *', () => {
+  console.log('running a task every two minutes');
+});
 //set up express app
 
 var app=express();
-const secureRoutes=require('./routes/api/secure-routes');
+
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
