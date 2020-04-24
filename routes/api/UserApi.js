@@ -1,10 +1,11 @@
 var express=require('express');
-var User=require('../../models/UserSchema');
+const User=require('../../models/UserSchema');
 const bearer = require('passport-http-bearer');
 
 var router=express.Router();
 const jwt = require("jsonwebtoken");
 const passport = require('passport');
+require('../../passport');
 // ======
 // Login
 // ======
@@ -22,15 +23,19 @@ router.post('/login', function (req, res) {
 //get a list of users from db
 router.get('/getUsers', passport.authenticate('bearer', { session: false }), function(req,res,next){
     User.find({},(err,resultat)=>{
-       if(err) res.send(err);
-        res.send(resultat);
+       if(err){ res.send(err);
+       }else{res.send(resultat);
+       }
     });
 });
 //get user from db
-router.get('/getuser/:id', passport.authenticate('bearer', { session: false }), function(req,res,next){
+router.get('/getuser/:id', passport.authenticate('bearer', { session: false }),(req,res)=>{
     User.findById(req.params.id,(err,resultat)=>{
-        if(err)res.send(err);
-        res.send(resultat);
+        if(err){
+            res.send(err);
+        }else{ 
+            res.send(resultat);
+    }
     });
     });
 

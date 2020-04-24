@@ -1,7 +1,7 @@
 var express=require("express");
 var passport=require("passport");
 var router=express.Router();
-var User=require('../models/UserSchema');
+const User=require('./models/UserSchema');
 var jwt = require('jsonwebtoken');
 const BearerStrategy = require('passport-http-bearer');
 

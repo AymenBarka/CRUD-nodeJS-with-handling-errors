@@ -7,6 +7,7 @@ var DeleteTodoFromUser=require('./routes/api/DeleteTodoFromUser');
 var mail=require('./routes/api/Mail');
 var img = require('./routes/api/imgUploads');
 var passport=require('passport');
+require('./passport');
 
 //set up express app
 
